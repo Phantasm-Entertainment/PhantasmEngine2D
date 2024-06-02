@@ -9,12 +9,17 @@ endif()
 
 option(PHENGINE_STATIC "Build static library instead of shared" OFF)
 
-find_package(GLFW3 3.3.9 REQUIRED)
+find_package(SDL3 3.1.2 REQUIRED COMPONENTS SDL3)
 
 set(PHENGINE_SRC_FILES
     src/Game.cpp
     src/GameUpdate.cpp
+    src/GraphicsDevice.cpp
+    src/Monitor.cpp
     src/TaskExecutor.cpp
+    src/Window.cpp
+
+    src/Graphics/GL.cpp
 
     src/Math/Calculator.cpp
     src/Math/Matrix4.cpp
@@ -33,10 +38,10 @@ if(WIN32)
         message(FATAL "not done yet")
     else()
         add_library(PhEngine SHARED ${PHENGINE_SRC_FILES} ${PHENGINE_WIN64_SRC_FILES})
-        target_include_directories(PhEngine PUBLIC include ${GLFW_INCLUDE_DIRS})
+        target_include_directories(PhEngine PUBLIC include)
         target_compile_definitions(PhEngine PUBLIC PHENGINE_SHARED UNICODE _UNICODE)
         target_compile_definitions(PhEngine PRIVATE PHENGINE_BUILDING_DLL)
-        target_link_libraries(PhEngine ${GLFW_LIBRARIES})
+        target_link_libraries(PhEngine SDL3::SDL3)
     endif()
 else()
     message(FATAL "not done yet")
