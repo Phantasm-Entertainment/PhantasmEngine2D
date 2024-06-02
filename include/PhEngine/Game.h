@@ -26,6 +26,7 @@ namespace PHENGINE_NAMESPACE
         static std::mutex m_GameMutex;
         static void ModifyRunningGame(Game*, bool);
 
+        std::thread::id m_ThreadID;
         bool m_Exit;
     public:
         Game();

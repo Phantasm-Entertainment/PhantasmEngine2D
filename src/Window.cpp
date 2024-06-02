@@ -1,0 +1,80 @@
+#include "PhEngine/Window.h"
+
+namespace PHENGINE_NAMESPACE
+{
+    Window::Window(GraphicsDevice* gd, std::shared_ptr<GameUpdate> gm) : m_GraphicsDevice(gd), m_GameUpdate(gm), m_Closed(false), m_Resolution(800, 600),
+    m_Fullscreen(false)
+    {
+        SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+        SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
+        SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
+        m_WinHandle = SDL_CreateWindow("Game", 800, 600, SDL_WINDOW_OPENGL);
+       
+        if (m_WinHandle == nullptr)
+        {
+            throw Exception("?????");
+        }
+
+        m_Context = SDL_GL_CreateContext(m_WinHandle);
+        Center();
+    }
+
+    Window::~Window()
+    {
+        SDL_DestroyWindow(m_WinHandle);
+    }
+
+    void Window::Center() const noexcept
+    {
+        if (!m_Fullscreen)
+        {
+            const Resolution& res = m_GraphicsDevice->GetPrimaryMonitor().GetCurrentResolution();
+            SDL_SetWindowPosition(m_WinHandle, (res.GetWidth() - m_Resolution.GetWidth()) / 2, (res.GetHeight() - m_Resolution.GetHeight()) / 2);
+        }
+    }
+
+    void Window::Clear(float r, float g, float b, float a) const noexcept
+    {
+        const Graphics::GL* gl = m_GraphicsDevice->GetGL();
+        gl->ClearColor(r, g, b, a);
+        gl->Clear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    }
+
+    bool Window::Update()
+    {
+        SDL_Event event;
+
+        while (SDL_PollEvent(&event))
+        {
+            switch (event.type)
+            {
+            case SDL_EVENT_KEY_DOWN:
+                m_GameUpdate->m_Keys[event.key.keysym.scancode] = true;
+                break;
+            case SDL_EVENT_KEY_UP:
+                m_GameUpdate->m_Keys[event.key.keysym.scancode] = false;
+                break;
+            case SDL_EVENT_MOUSE_BUTTON_DOWN:
+                m_GameUpdate->m_MouseButtons[event.button.button] = true;
+                break;
+            case SDL_EVENT_MOUSE_BUTTON_UP:
+                m_GameUpdate->m_MouseButtons[event.button.button] = false;
+                break;
+            case SDL_EVENT_MOUSE_MOTION:
+                m_GameUpdate->m_MousePos.X = event.motion.x;
+                m_GameUpdate->m_MousePos.Y = event.motion.y;
+                break;
+            case SDL_EVENT_QUIT:
+                m_Closed = true;
+                break;
+            }
+        }
+
+        return m_Closed;
+    }
+
+    void Window::SwapBuffers()
+    {
+        SDL_GL_SwapWindow(m_WinHandle);
+    }
+}
