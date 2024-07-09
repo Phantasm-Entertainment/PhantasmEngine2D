@@ -9,7 +9,7 @@ endif()
 
 option(PHENGINE_STATIC "Build static library instead of shared" OFF)
 
-find_package(SDL3 3.1.2 REQUIRED COMPONENTS SDL3)
+find_package(SDL3 3.1.1 REQUIRED)
 
 set(PHENGINE_SRC_FILES
     src/Game.cpp
