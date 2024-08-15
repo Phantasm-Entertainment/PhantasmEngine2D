@@ -1,6 +1,8 @@
 #ifndef PHENGINE_MATH_MATRIX4_H_
 #define PHENGINE_MATH_MATRIX4_H_
 
+#include <cmath>
+
 #include "PhEngine/Internal/Setup.h"
 #include "PhEngine/Math/Vector3.h"
 #include "PhEngine/Math/Vector4.h"

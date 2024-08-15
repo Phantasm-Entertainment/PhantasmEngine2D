@@ -538,7 +538,7 @@ namespace PHENGINE_MATH_NAMESPACE
 
     Matrix4 Matrix4::CreatePerspectiveFOV(const float fov, const float aspectRatio, const float near, const float far) noexcept
     {
-        float scale = 1.0f / std::tanf(fov * 0.5f * 3.1415926f / 180.0f);
+        float scale = 1.0f / std::tan(fov * 0.5f * 3.1415926f / 180.0f);
 
         return Matrix4(scale * (1.0f / aspectRatio), 0,     0,                            0,
                        0,                            scale, 0,                            0,
@@ -559,8 +559,8 @@ namespace PHENGINE_MATH_NAMESPACE
     Matrix4 Matrix4::CreateRotationX(const float angle) noexcept
     {
         return Matrix4(1, 0,                0,                 0,
-                       0, std::cosf(angle), -std::sinf(angle), 0,
-                       0, std::sinf(angle), std::cosf(angle),  0,
+                       0, std::cos(angle), -std::sin(angle), 0,
+                       0, std::sin(angle), std::cos(angle),  0,
                        0, 0,                0,                 1);
     }
 
@@ -571,9 +571,9 @@ namespace PHENGINE_MATH_NAMESPACE
 
     Matrix4 Matrix4::CreateRotationY(const float angle) noexcept
     {
-        return Matrix4(std::cosf(angle),  0, std::sinf(angle), 0,
+        return Matrix4(std::cos(angle),  0, std::sin(angle), 0,
                        0,                 1, 0,                0,
-                       -std::sinf(angle), 0, std::cosf(angle), 0,
+                       -std::sin(angle), 0, std::cos(angle), 0,
                        0,                 0, 0,                1);
     }
 
@@ -584,8 +584,8 @@ namespace PHENGINE_MATH_NAMESPACE
 
     Matrix4 Matrix4::CreateRotationZ(const float angle) noexcept
     {
-        return Matrix4(std::cosf(angle), -std::sinf(angle), 0, 0,
-                       std::sinf(angle), std::cosf(angle), 0, 0,
+        return Matrix4(std::cos(angle), -std::sin(angle), 0, 0,
+                       std::sin(angle), std::cos(angle), 0, 0,
                        0, 0, 1, 0,
                        0, 0, 0, 1);
     }

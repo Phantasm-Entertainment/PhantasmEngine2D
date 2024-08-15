@@ -16,7 +16,7 @@ namespace PHENGINE_MATH_NAMESPACE
 
     float Calculator::WrapAngle(float angle)
     {
-        return angle - (std::floorf(angle / 360.0f) * 360.0f);
+        return angle - (std::floor(angle / 360.0f) * 360.0f);
     }
 
     float Calculator::WrapAngle180(float angle)
