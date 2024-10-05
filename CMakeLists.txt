@@ -12,6 +12,7 @@ option(PHENGINE_STATIC "Build static library instead of shared" OFF)
 find_package(SDL3 3.1.1 REQUIRED)
 
 set(PHENGINE_SRC_FILES
+    src/ContentManager
     src/Game.cpp
     src/GameUpdate.cpp
     src/GraphicsDevice.cpp
@@ -20,6 +21,7 @@ set(PHENGINE_SRC_FILES
     src/Window.cpp
 
     src/Graphics/GL.cpp
+    src/Graphics/SpriteFont.cpp
 
     src/Math/Calculator.cpp
     src/Math/Matrix4.cpp

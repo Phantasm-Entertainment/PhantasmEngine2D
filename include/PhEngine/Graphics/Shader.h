@@ -15,7 +15,7 @@ namespace PHENGINE_GRAPHICS_NAMESPACE
         Window* m_Window;
         GLuint m_Program;
 
-        Shader();
+        Shader(GLuint);
     public:
         
     };
