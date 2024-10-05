@@ -17,7 +17,7 @@ namespace PHENGINE_NAMESPACE
         for (int i = 0; i < count; ++i)
         {
             int modeCount;
-            const SDL_DisplayMode** displayModes = SDL_GetFullscreenDisplayModes(displayIds[i], &modeCount);
+            SDL_DisplayMode** displayModes = SDL_GetFullscreenDisplayModes(displayIds[i], &modeCount);
 
             if (displayModes == NULL)
             {

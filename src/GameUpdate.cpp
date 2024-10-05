@@ -7,10 +7,10 @@ namespace PHENGINE_NAMESPACE
     GameUpdate::GameUpdate() : m_TotalTime(0.0)
     {
         m_Now = std::chrono::steady_clock::now();
-        m_OldKeys = new bool[SDL_NUM_SCANCODES];
-        m_Keys = new bool[SDL_NUM_SCANCODES];
+        m_OldKeys = new bool[SDL_SCANCODE_COUNT];
+        m_Keys = new bool[SDL_SCANCODE_COUNT];
         
-        for (unsigned short i = 0; i < SDL_NUM_SCANCODES; ++i)
+        for (unsigned short i = 0; i < SDL_SCANCODE_COUNT; ++i)
         {
             m_OldKeys[i] = false;
             m_Keys[i] = false;
@@ -36,7 +36,7 @@ namespace PHENGINE_NAMESPACE
 
     void GameUpdate::InputUpdate()
     {
-        for (unsigned short i = 0; i < SDL_NUM_SCANCODES; ++i)
+        for (unsigned short i = 0; i < SDL_SCANCODE_COUNT; ++i)
         {
             m_Keys[i] = m_OldKeys[i];
         }
@@ -49,7 +49,7 @@ namespace PHENGINE_NAMESPACE
 
     bool GameUpdate::IsKeyDown(int key)
     {
-        if (key < 1 || key > SDL_NUM_SCANCODES)
+        if (key < 1 || key > SDL_SCANCODE_COUNT)
         {
             return false;
         }
@@ -59,7 +59,7 @@ namespace PHENGINE_NAMESPACE
 
     bool GameUpdate::IsKeyPressed(int key)
     {
-        if (key < 1 || key > SDL_NUM_SCANCODES)
+        if (key < 1 || key > SDL_SCANCODE_COUNT)
         {
             return false;
         }

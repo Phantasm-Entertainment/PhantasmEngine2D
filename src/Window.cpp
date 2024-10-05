@@ -49,10 +49,10 @@ namespace PHENGINE_NAMESPACE
             switch (event.type)
             {
             case SDL_EVENT_KEY_DOWN:
-                m_GameUpdate->m_Keys[event.key.keysym.scancode] = true;
+                m_GameUpdate->m_Keys[event.key.scancode] = true;
                 break;
             case SDL_EVENT_KEY_UP:
-                m_GameUpdate->m_Keys[event.key.keysym.scancode] = false;
+                m_GameUpdate->m_Keys[event.key.scancode] = false;
                 break;
             case SDL_EVENT_MOUSE_BUTTON_DOWN:
                 m_GameUpdate->m_MouseButtons[event.button.button] = true;

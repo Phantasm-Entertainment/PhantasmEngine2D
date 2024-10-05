@@ -9,10 +9,10 @@ endif()
 
 option(PHENGINE_STATIC "Build static library instead of shared" OFF)
 
-find_package(SDL3 3.1.1 REQUIRED)
+find_package(SDL3 3.1.2 REQUIRED)
 
 set(PHENGINE_SRC_FILES
-    src/ContentManager
+    src/ContentManager.cpp
     src/Game.cpp
     src/GameUpdate.cpp
     src/GraphicsDevice.cpp
