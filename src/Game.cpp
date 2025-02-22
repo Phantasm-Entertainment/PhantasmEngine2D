@@ -13,7 +13,7 @@ namespace PHENGINE_NAMESPACE
 
         if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) != 0)
         {
-            throw Exception("SDL_Init failed");
+            throw Exception("SDL_Init failed: " + std::string(SDL_GetError()));
         }
         
         ModifyRunningGame(this, true);
