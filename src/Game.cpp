@@ -11,7 +11,7 @@ namespace PHENGINE_NAMESPACE
     {
         m_ThreadID = std::this_thread::get_id();
 
-        if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) != 0)
+        if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) == false)
         {
             throw Exception("SDL_Init failed: " + std::string(SDL_GetError()));
         }
