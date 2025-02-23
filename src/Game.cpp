@@ -35,9 +35,10 @@ namespace PHENGINE_NAMESPACE
         m_GraphicsDevice = std::make_unique<GraphicsDevice>();
         std::shared_ptr<GameUpdate> gameUpdate = std::make_shared<GameUpdate>();
         m_Window = std::make_unique<Window>(m_GraphicsDevice.get(), gameUpdate);
-        m_TaskExecutor = std::make_unique<TaskExecutor>();
-
         m_GraphicsDevice->InitGL();
+        m_TaskExecutor = std::make_unique<TaskExecutor>();
+        m_ContentManager = std::make_unique<ContentManager>(m_GraphicsDevice->GetGL());
+        
         m_Window->Clear(0.0f, 0.0f, 0.0f, 1.0f);
         Initialise();
 

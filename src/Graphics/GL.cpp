@@ -6,12 +6,18 @@ namespace PHENGINE_GRAPHICS_NAMESPACE
 {
     GL::GL()
     {
-        m_ClearColor    = (void(*)(GLfloat,GLfloat,GLfloat,GLfloat))GET_PROC_ADDRESS("glClearColor");
-        m_Clear         = (void(*)(GLbitfield))GET_PROC_ADDRESS("glClear");
+        m_ClearColor = (void(*)(GLfloat,GLfloat,GLfloat,GLfloat))GET_PROC_ADDRESS("glClearColor");
+        m_Clear = (void(*)(GLbitfield))GET_PROC_ADDRESS("glClear");
 
-        m_CreateShader  = (GLuint(*)(GLenum))GET_PROC_ADDRESS("glCreateShader");
-        m_DeleteShader  = (void(*)(GLuint))GET_PROC_ADDRESS("glDeleteShader");
-        m_ShaderSource  = (void(*)(GLuint,GLsizei,const GLchar**,const GLint*))GET_PROC_ADDRESS("glShaderSource");
+        m_CreateShader = (GLuint(*)(GLenum))GET_PROC_ADDRESS("glCreateShader");
+        m_DeleteShader = (void(*)(GLuint))GET_PROC_ADDRESS("glDeleteShader");
+        m_ShaderSource = (void(*)(GLuint,GLsizei,const GLchar**,const GLint*))GET_PROC_ADDRESS("glShaderSource");
         m_CompileShader = (void(*)(GLuint))GET_PROC_ADDRESS("glCompileShader");
+
+        m_GenTextures = (void(*)(GLsizei,GLuint*))GET_PROC_ADDRESS("glGenTextures");
+        m_DeleteTextures = (void(*)(GLsizei,const GLuint*))GET_PROC_ADDRESS("glDeleteTextures");
+        m_BindTexture = (void(*)(GLenum,GLuint))GET_PROC_ADDRESS("glBindTexture");
+        m_TexParameteri = (void(*)(GLenum,GLenum,GLint))GET_PROC_ADDRESS("glTexParameteri");
+        m_TexImage2D = (void(*)(GLenum,GLint,GLint,GLsizei,GLsizei,GLint,GLenum,GLenum,const void*))GET_PROC_ADDRESS("glTexImage2D");
     }
 }

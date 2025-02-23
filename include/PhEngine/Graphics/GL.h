@@ -20,6 +20,13 @@ namespace PHENGINE_GRAPHICS_NAMESPACE
         void (*m_DeleteShader)(GLuint);
         void (*m_ShaderSource)(GLuint,GLsizei,const GLchar**,const GLint*);
         void (*m_CompileShader)(GLuint);
+
+        // texture functions
+        void (*m_GenTextures)(GLsizei,GLuint*);
+        void (*m_DeleteTextures)(GLsizei,const GLuint*);
+        void (*m_BindTexture)(GLenum,GLuint);
+        void (*m_TexParameteri)(GLenum,GLenum,GLint);
+        void (*m_TexImage2D)(GLenum,GLint,GLint,GLsizei,GLsizei,GLint,GLenum,GLenum,const void*);
     public:
         GL();
 
@@ -30,6 +37,12 @@ namespace PHENGINE_GRAPHICS_NAMESPACE
         inline void DeleteShader(GLuint shader) { m_DeleteShader(shader); }
         inline void ShaderSource(GLuint shader, GLsizei count, const GLchar** string, const GLint* length) { m_ShaderSource(shader, count, string, length); }
         inline void CompileShader(GLuint shader) { m_CompileShader(shader); }
+
+        inline void GenTextures(GLsizei n, GLuint* textures) { m_GenTextures(n, textures); }
+        inline void DeleteTextures(GLsizei n, const GLuint* textures) { m_DeleteTextures(n, textures); }
+        inline void BindTexture(GLenum target, GLuint texture) { m_BindTexture(target, texture); }
+        inline void TexParameteri(GLenum target, GLenum pname, GLint param) { m_TexParameteri(target, pname, param); }
+        inline void TexImage2D(GLenum target, GLint level, GLint internalformat, GLsizei width, GLsizei height, GLint border, GLenum format, GLenum type, const void * data) { m_TexImage2D(target, level, internalformat, width, height, border, format, type, data); }
     };
 }
 

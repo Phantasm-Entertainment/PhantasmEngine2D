@@ -10,6 +10,7 @@
 #include "PhEngine/GraphicsDevice.h"
 #include "PhEngine/Window.h"
 #include "PhEngine/TaskExecutor.h"
+#include "PhEngine/ContentManager.h"
 #include "PhEngine/GameUpdate.h"
 #include "PhEngine/GameDraw.h"
 
@@ -21,6 +22,7 @@ namespace PHENGINE_NAMESPACE
         std::unique_ptr<GraphicsDevice> m_GraphicsDevice;
         std::unique_ptr<Window> m_Window;
         std::unique_ptr<TaskExecutor> m_TaskExecutor;
+        std::unique_ptr<ContentManager> m_ContentManager;
 
         static std::map<std::thread::id, Game*> m_RunningGames;
         static std::mutex m_GameMutex;
@@ -35,6 +37,7 @@ namespace PHENGINE_NAMESPACE
         inline GraphicsDevice* const GetGraphicsDevice() const noexcept { return m_GraphicsDevice.get(); }
         inline Window* const GetWindow() const noexcept { return m_Window.get(); }
         inline TaskExecutor* const GetTaskExecutor() const noexcept { return m_TaskExecutor.get(); }
+        inline ContentManager* const GetContentManager() const noexcept { return m_ContentManager.get(); }
 
         void RunGameFixed(double updateRate = 60.0);
     protected:

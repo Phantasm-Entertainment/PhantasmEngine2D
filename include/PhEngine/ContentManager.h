@@ -3,17 +3,45 @@
 
 #include <cstdint>
 #include <string>
-#include <map>
+#include <unordered_map>
+#include <fstream>
+#include <memory>
+#include <cstdio>
+#include <cstring>
+#include <vector>
 
 #include "PhEngine/Internal/Setup.h"
+#include "PhEngine/Exception.h"
+#include "PhEngine/TextureAtlas.h"
 #include "PhEngine/Graphics/Texture2D.h"
+#include "PhEngine/Graphics/SpriteFont.h"
+#include "PhEngine/Graphics/GL.h"
 
 namespace PHENGINE_NAMESPACE
 {
     class PHENGINE_EXPORT ContentManager
     {
     private:
-        std::map<std::string, Graphics::Texture2D> m_Textures;
+        static const char m_FileHeader[8];
+
+        static std::uint32_t ReadUInt32(char*);
+        static std::uint16_t ReadUInt16(char*);
+
+        std::uint16_t m_AtlasPageSize;
+        std::uint16_t m_AtlasPageCount;
+
+        std::unordered_map<std::string, Graphics::Texture2D> m_Textures;
+        std::unordered_map<std::string, Graphics::SpriteFont> m_Fonts;
+
+        Graphics::GL* m_GL;
+        GLuint m_AtlasTexture;
+    public:
+        inline ContentManager(const Graphics::GL* const gl)
+        : m_GL(const_cast<Graphics::GL*>(gl)) { }
+
+        ~ContentManager();
+
+        void LoadContentFile(const std::string&);
     };
 }
 
