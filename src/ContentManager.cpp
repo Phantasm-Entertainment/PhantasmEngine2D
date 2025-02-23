@@ -100,6 +100,11 @@ namespace PHENGINE_NAMESPACE
                 h = ReadUInt16(buffer + 8);
                 imageDataSize = w * h * 4;
                 nameLen = buffer[10];
+                std::cout << pageNum << '\n';
+                std::cout << x << '\n';
+                std::cout << y << '\n';
+                std::cout << w << '\n';
+                std::cout << h << '\n';
 
                 if (std::fread(&buffer, 1, nameLen, fp.get()) != nameLen) { throw std::string("not a valid content file 7"); }
 
@@ -131,12 +136,21 @@ namespace PHENGINE_NAMESPACE
                 }
 
                 std::cout << "Found " << name << " on page " << std::to_string(pageNum) << '\n';
+                std::size_t atlasRowSize = 4096*4;
+                std::size_t i = 4096;
 
                 for (std::uint16_t blitY = 0; blitY < h; ++blitY)
                 {
                     for (std::uint16_t blitX = 0; blitX < w; ++blitX)
                     {
-                        pages[pageNum].GetData()[x * 4096 + y] = imageData.get()[blitX * w + blitY];
+                        std::size_t destIndex = (y + blitY) * atlasRowSize + (x + blitX) * 4;
+                        std::size_t sourceIndex = blitY * (w * 4) + (blitX * 4);
+                        //std::cout << destIndex << ' ' << sourceIndex << '\n';
+
+                        for (std::uint16_t i = 0; i < 4; ++i)
+                        {
+                            pages[pageNum].GetData()[destIndex + i] = imageData.get()[sourceIndex + i];
+                        }
                     }
                 }
             }
@@ -206,7 +220,8 @@ namespace PHENGINE_NAMESPACE
         m_GL->TexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
         m_GL->TexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
         m_GL->TexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-        m_GL->TexImage2D(GL_TEXTURE_2D, 0, GL_RGB, 4096, 4096, 0, GL_RGB, GL_UNSIGNED_BYTE, pages[0].GetData());
+        m_GL->TexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, m_AtlasPageSize, m_AtlasPageSize, 0, GL_RGBA, GL_UNSIGNED_BYTE, pages[0].GetData());
+        //m_GL->TexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 1920, 1080, 0, GL_RGBA, GL_UNSIGNED_BYTE, pages[0].GetData());
     }
 
     ContentManager::~ContentManager()
