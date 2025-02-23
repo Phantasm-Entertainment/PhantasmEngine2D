@@ -136,7 +136,7 @@ namespace PHENGINE_NAMESPACE
                 {
                     for (std::uint16_t blitX = 0; blitX < w; ++blitX)
                     {
-                        //pages[pageNum].GetData()[blitX * 4096 + (blitY * 4096)] = imageData.get()[blitX * w + blitY];
+                        pages[pageNum].GetData()[x * 4096 + y] = imageData.get()[blitX * w + blitY];
                     }
                 }
             }
