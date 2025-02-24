@@ -19,5 +19,8 @@ namespace PHENGINE_GRAPHICS_NAMESPACE
         m_BindTexture = (void(*)(GLenum,GLuint))GET_PROC_ADDRESS("glBindTexture");
         m_TexParameteri = (void(*)(GLenum,GLenum,GLint))GET_PROC_ADDRESS("glTexParameteri");
         m_TexImage2D = (void(*)(GLenum,GLint,GLint,GLsizei,GLsizei,GLint,GLenum,GLenum,const void*))GET_PROC_ADDRESS("glTexImage2D");
+        m_TexImage3D = (void(*)(GLenum,GLsizei,GLenum,GLsizei,GLsizei,GLsizei))GET_PROC_ADDRESS("glTexImage3D");
+        m_TexSubImage3D = (void(*)(GLenum,GLint,GLint,GLint,GLint,GLsizei,GLsizei,GLsizei,GLenum,GLenum,const void*))GET_PROC_ADDRESS("glTexSubImage3D");
+        m_TexStorage3D = (void(*)(GLenum,GLsizei,GLenum,GLsizei,GLsizei,GLsizei))GET_PROC_ADDRESS("glTexStorage3D");
     }
 }

@@ -6,6 +6,7 @@
 #include <vector>
 
 #include "PhEngine/Internal/Setup.h"
+#include "PhEngine/Graphics/GL.h"
 
 namespace PHENGINE_NAMESPACE
 {
@@ -28,12 +29,15 @@ namespace PHENGINE_NAMESPACE
     class PHENGINE_EXPORT TextureAtlas
     {
     private:
+        Graphics::GL* m_GL;
         std::vector<AtlasPage> m_Pages;
+        GLuint m_TexArray;
     public:
-        inline TextureAtlas(std::vector<AtlasPage> p)
-        : m_Pages(std::move(p)) { }
+        TextureAtlas(Graphics::GL*, std::vector<AtlasPage>);
 
-        inline TextureAtlas(TextureAtlas&& atlas) : m_Pages(std::move(atlas.m_Pages)) { }
+        inline ~TextureAtlas() { if (m_TexArray != 0) { m_GL->DeleteTextures(1, &m_TexArray); } }
+
+        inline TextureAtlas(TextureAtlas&& atlas) : m_Pages(std::move(atlas.m_Pages)) { atlas.m_TexArray = 0; }
     };
 }
 

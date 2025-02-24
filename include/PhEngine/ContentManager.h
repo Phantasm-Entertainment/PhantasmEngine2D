@@ -34,12 +34,12 @@ namespace PHENGINE_NAMESPACE
         std::unordered_map<std::string, Graphics::SpriteFont> m_Fonts;
 
         Graphics::GL* m_GL;
-        GLuint m_AtlasTexture;
+        TextureAtlas* m_Atlas;
     public:
         inline ContentManager(const Graphics::GL* const gl)
-        : m_GL(const_cast<Graphics::GL*>(gl)) { }
+        : m_GL(const_cast<Graphics::GL*>(gl)), m_Atlas(nullptr) { }
 
-        ~ContentManager();
+        inline ~ContentManager() { delete m_Atlas; }
 
         void LoadContentFile(const std::string&);
     };

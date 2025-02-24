@@ -137,7 +137,6 @@ namespace PHENGINE_NAMESPACE
 
                 std::cout << "Found " << name << " on page " << std::to_string(pageNum) << '\n';
                 std::size_t atlasRowSize = 4096*4;
-                std::size_t i = 4096;
 
                 for (std::uint16_t blitY = 0; blitY < h; ++blitY)
                 {
@@ -212,20 +211,17 @@ namespace PHENGINE_NAMESPACE
         }
 
         fp.reset();
-        m_AtlasPageCount = atlasPages;
-        m_AtlasPageSize = 4096;
-        m_GL->GenTextures(1, &m_AtlasTexture);
-        m_GL->BindTexture(GL_TEXTURE_2D, m_AtlasTexture);
-        m_GL->TexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-        m_GL->TexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-        m_GL->TexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-        m_GL->TexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-        m_GL->TexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, m_AtlasPageSize, m_AtlasPageSize, 0, GL_RGBA, GL_UNSIGNED_BYTE, pages[0].GetData());
+        if (m_Atlas != nullptr) { delete m_Atlas; }
+        m_Atlas = new TextureAtlas(m_GL, std::move(pages));
+        // m_AtlasPageCount = atlasPages;
+        // m_AtlasPageSize = 4096;
+        // m_GL->GenTextures(1, &m_AtlasTexture);
+        // m_GL->BindTexture(GL_TEXTURE_2D, m_AtlasTexture);
+        // m_GL->TexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+        // m_GL->TexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+        // m_GL->TexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+        // m_GL->TexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        // m_GL->TexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, m_AtlasPageSize, m_AtlasPageSize, 0, GL_RGBA, GL_UNSIGNED_BYTE, pages[0].GetData());
         //m_GL->TexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 1920, 1080, 0, GL_RGBA, GL_UNSIGNED_BYTE, pages[0].GetData());
-    }
-
-    ContentManager::~ContentManager()
-    {
-        m_GL->DeleteTextures(1, &m_AtlasTexture);
     }
 }

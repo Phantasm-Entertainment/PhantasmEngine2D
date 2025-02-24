@@ -27,6 +27,9 @@ namespace PHENGINE_GRAPHICS_NAMESPACE
         void (*m_BindTexture)(GLenum,GLuint);
         void (*m_TexParameteri)(GLenum,GLenum,GLint);
         void (*m_TexImage2D)(GLenum,GLint,GLint,GLsizei,GLsizei,GLint,GLenum,GLenum,const void*);
+        void (*m_TexImage3D)(GLenum,GLsizei,GLenum,GLsizei,GLsizei,GLsizei);
+        void (*m_TexSubImage3D)(GLenum,GLint,GLint,GLint,GLint,GLsizei,GLsizei,GLsizei,GLenum,GLenum,const void*);
+        void (*m_TexStorage3D)(GLenum,GLsizei,GLenum,GLsizei,GLsizei,GLsizei);
     public:
         GL();
 
@@ -43,6 +46,9 @@ namespace PHENGINE_GRAPHICS_NAMESPACE
         inline void BindTexture(GLenum target, GLuint texture) { m_BindTexture(target, texture); }
         inline void TexParameteri(GLenum target, GLenum pname, GLint param) { m_TexParameteri(target, pname, param); }
         inline void TexImage2D(GLenum target, GLint level, GLint internalformat, GLsizei width, GLsizei height, GLint border, GLenum format, GLenum type, const void * data) { m_TexImage2D(target, level, internalformat, width, height, border, format, type, data); }
+        inline void TexImage3D(GLenum target, GLsizei levels, GLenum internalformat, GLsizei width, GLsizei height, GLsizei depth) { m_TexImage3D(target, levels, internalformat, width, height, depth); }
+        inline void TexSubImage3D(GLenum target, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLsizei width, GLsizei height, GLsizei depth, GLenum format, GLenum type, const void* pixels) { m_TexSubImage3D(target, level, xoffset, yoffset, zoffset, width, height, depth, format, type, pixels); }
+        inline void TexStorage3D(GLenum target, GLsizei levels, GLenum internalformat, GLsizei width, GLsizei height, GLsizei depth) { m_TexStorage3D(target, levels, internalformat, width, height, depth); }
     };
 }
 

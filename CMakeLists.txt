@@ -21,6 +21,7 @@ set(PHENGINE_SRC_FILES
     src/GraphicsDevice.cpp
     src/Monitor.cpp
     src/TaskExecutor.cpp
+    src/TextureAtlas.cpp
     src/Window.cpp
 
     src/Graphics/GL.cpp
