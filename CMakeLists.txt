@@ -9,7 +9,7 @@ endif()
 
 option(PHENGINE_STATIC "Build static library instead of shared" OFF)
 
-find_package(SDL3 3.1.2 REQUIRED)
+find_package(SDL3 3.2.4 REQUIRED)
 if(NOT DEFINED BROTLI_INCLUDE_DIRS OR NOT DEFINED BROTLI_LIBRARIES)
     message(FATAL_ERROR "BROTLI_INCLUDE_DIRS and BROTLI_LIBRARIES need to be defined")
 endif()
