@@ -11,11 +11,12 @@ namespace PHENGINE_GRAPHICS_NAMESPACE
     class PHENGINE_EXPORT Texture2D
     {
     private:
+        std::string m_Name;
         std::uint16_t m_Width, m_Height;
         AtlasRef m_AtlasRef;
     public:
-        inline Texture2D(std::uint16_t w, std::uint16_t h, AtlasRef& ar) noexcept
-        : m_Width(w), m_Height(h), m_AtlasRef(ar) { }
+        inline Texture2D(std::string n, std::uint16_t w, std::uint16_t h, AtlasRef ar) noexcept
+        : m_Name(std::move(n)), m_Width(w), m_Height(h), m_AtlasRef(std::move(ar)) { }
 
         inline std::uint16_t GetWidth() const noexcept { return m_Height; }
         inline std::uint16_t GetHeight() const noexcept { return m_Height; }

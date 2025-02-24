@@ -2,8 +2,6 @@
 
 #include <brotli/decode.h>
 
-#include <iostream>
-
 namespace PHENGINE_NAMESPACE
 {
     const char ContentManager::m_FileHeader[8] = { 80, 69, 67, 70, 2, 3, 1, 7 };
@@ -25,6 +23,21 @@ namespace PHENGINE_NAMESPACE
         std::fclose(fp);
     }
 
+    struct SpriteFontCharInfo
+    {
+        SpriteFontCharInfo(std::uint8_t c, std::uint16_t x, std::uint16_t y, std::uint16_t w, std::uint16_t h, std::int32_t bx, std::int32_t by, std::int32_t a)
+        : m_Code(c), m_X(x), m_Y(y), m_Width(w), m_Height(h), m_BearingX(bx), m_BearingY(by), m_Advance(a) { }
+
+        std::uint8_t m_Code;
+        std::uint16_t m_X;
+        std::uint16_t m_Y;
+        std::uint16_t m_Width;
+        std::uint16_t m_Height;
+        std::int32_t m_BearingX;
+        std::int32_t m_BearingY;
+        std::int32_t m_Advance;
+    };
+
     struct SpriteFontInfo
     {
         SpriteFontInfo(const std::string& name, std::uint16_t a, std::uint16_t d, std::uint16_t l)
@@ -34,10 +47,14 @@ namespace PHENGINE_NAMESPACE
         std::uint16_t m_Ascender;
         std::uint16_t m_Descender;
         std::uint16_t m_LineSpacing;
+        std::vector<SpriteFontCharInfo> m_Chars;
     };
 
     void ContentManager::LoadContentFile(const std::string& path)
     {
+        if (m_Atlas != nullptr) { delete m_Atlas; }
+        m_Textures.clear();
+        m_Fonts.clear();
         std::unique_ptr<std::FILE, decltype(&PE_CloseFile)> fp(std::fopen(path.c_str(), "rb"), &PE_CloseFile);
 
         if (!fp) { throw Exception("could not open file"); }
@@ -100,11 +117,6 @@ namespace PHENGINE_NAMESPACE
                 h = ReadUInt16(buffer + 8);
                 imageDataSize = w * h * 4;
                 nameLen = buffer[10];
-                std::cout << pageNum << '\n';
-                std::cout << x << '\n';
-                std::cout << y << '\n';
-                std::cout << w << '\n';
-                std::cout << h << '\n';
 
                 if (std::fread(&buffer, 1, nameLen, fp.get()) != nameLen) { throw std::string("not a valid content file 7"); }
 
@@ -135,7 +147,6 @@ namespace PHENGINE_NAMESPACE
                     }
                 }
 
-                std::cout << "Found " << name << " on page " << std::to_string(pageNum) << '\n';
                 std::size_t atlasRowSize = 4096*4;
 
                 for (std::uint16_t blitY = 0; blitY < h; ++blitY)
@@ -144,7 +155,6 @@ namespace PHENGINE_NAMESPACE
                     {
                         std::size_t destIndex = (y + blitY) * atlasRowSize + (x + blitX) * 4;
                         std::size_t sourceIndex = blitY * (w * 4) + (blitX * 4);
-                        //std::cout << destIndex << ' ' << sourceIndex << '\n';
 
                         for (std::uint16_t i = 0; i < 4; ++i)
                         {
@@ -152,6 +162,9 @@ namespace PHENGINE_NAMESPACE
                         }
                     }
                 }
+
+                std::string key(name);
+                m_Textures.emplace(std::piecewise_construct, std::forward_as_tuple(key), std::forward_as_tuple(std::move(name), w, h, std::move(Graphics::AtlasRef(pageNum, x, y))));
             }
             else if (buffer[0] == 1)
             {
@@ -171,7 +184,7 @@ namespace PHENGINE_NAMESPACE
 
                 if (std::fread(&buffer, 1, nameLen, fp.get()) != nameLen) { throw std::string("not a valid content file 13"); }
 
-                std::string name(reinterpret_cast<const char*>(&buffer), nameLen);
+                std::string name(buffer, nameLen);
                 std::shared_ptr<char[]> imageData;
 
                 if (w != 0 && h != 0)
@@ -201,8 +214,30 @@ namespace PHENGINE_NAMESPACE
                         }
                     }
                 }
+                
+                std::size_t atlasRowSize = 4096*4;
 
-                //contentFile->m_Pages[pageNum]->m_Textures.push_back(std::make_shared<PageTexture>(name, x, y, w, h, imageData, code, bearingX, bearingY, advance));
+                for (std::uint16_t blitY = 0; blitY < h; ++blitY)
+                {
+                    for (std::uint16_t blitX = 0; blitX < w; ++blitX)
+                    {
+                        std::size_t destIndex = (y + blitY) * atlasRowSize + (x + blitX) * 4;
+                        std::size_t sourceIndex = blitY * (w * 4) + (blitX * 4);
+
+                        for (std::uint16_t i = 0; i < 4; ++i)
+                        {
+                            pages[pageNum].GetData()[destIndex + i] = imageData.get()[sourceIndex + i];
+                        }
+                    }
+                }
+
+                for (auto& font : spriteFontInfo)
+                {
+                    if (font.m_Name == name)
+                    {
+                        font.m_Chars.emplace_back(code, x, y, w, h, bearingY, bearingY, advance);
+                    }
+                }
             }
             else
             {
@@ -210,18 +245,21 @@ namespace PHENGINE_NAMESPACE
             }
         }
 
+        for (auto& font : spriteFontInfo)
+        {
+            Graphics::SpriteFontChar** chars = new Graphics::SpriteFontChar*[126];
+            std::memset(chars, 0, sizeof(Graphics::SpriteFontChar*) * 126);
+
+            for (auto& fChar : font.m_Chars)
+            {
+                chars[fChar.m_Code - 1] = new Graphics::SpriteFontChar(fChar.m_Code, fChar.m_Width, fChar.m_Height, fChar.m_BearingX, fChar.m_BearingY, fChar.m_Advance, std::move(Graphics::AtlasRef(pageNum, fChar.m_X, fChar.m_Y)));
+            }
+
+            std::string key(font.m_Name);
+            m_Fonts.emplace(std::piecewise_construct, std::forward_as_tuple(key), std::forward_as_tuple(std::move(font.m_Name), font.m_Ascender, font.m_Descender, font.m_LineSpacing, chars));
+        }
+
         fp.reset();
-        if (m_Atlas != nullptr) { delete m_Atlas; }
         m_Atlas = new TextureAtlas(m_GL, std::move(pages));
-        // m_AtlasPageCount = atlasPages;
-        // m_AtlasPageSize = 4096;
-        // m_GL->GenTextures(1, &m_AtlasTexture);
-        // m_GL->BindTexture(GL_TEXTURE_2D, m_AtlasTexture);
-        // m_GL->TexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-        // m_GL->TexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-        // m_GL->TexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-        // m_GL->TexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-        // m_GL->TexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, m_AtlasPageSize, m_AtlasPageSize, 0, GL_RGBA, GL_UNSIGNED_BYTE, pages[0].GetData());
-        //m_GL->TexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 1920, 1080, 0, GL_RGBA, GL_UNSIGNED_BYTE, pages[0].GetData());
     }
 }

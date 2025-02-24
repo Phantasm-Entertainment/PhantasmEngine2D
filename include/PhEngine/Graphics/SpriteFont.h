@@ -17,8 +17,8 @@ namespace PHENGINE_GRAPHICS_NAMESPACE
         std::int32_t m_BearingX, m_BearingY, m_Advance;
         AtlasRef m_AtlasRef;
     public:
-        inline SpriteFontChar(std::uint8_t c, std::uint16_t w, std::uint16_t h, std::int32_t bx, std::int32_t by, std::int32_t a, AtlasRef& r) noexcept
-        : m_Code(c), m_Width(w), m_Height(h), m_BearingX(bx), m_BearingY(by), m_Advance(a), m_AtlasRef(r) { }
+        inline SpriteFontChar(std::uint8_t c, std::uint16_t w, std::uint16_t h, std::int32_t bx, std::int32_t by, std::int32_t a, AtlasRef r) noexcept
+        : m_Code(c), m_Width(w), m_Height(h), m_BearingX(bx), m_BearingY(by), m_Advance(a), m_AtlasRef(std::move(r)) { }
 
         inline std::uint8_t GetCode() const noexcept { return m_Code; }
         inline std::uint16_t GetWidth() const noexcept { return m_Width; }
@@ -33,12 +33,11 @@ namespace PHENGINE_GRAPHICS_NAMESPACE
     {
     private:
         std::string m_Name;
-        std::uint16_t m_Size;
         std::uint16_t m_Ascender, m_Descender, m_LineSpacing;
         SpriteFontChar** m_Chars;
     public:
-        inline SpriteFont(const std::string& name, std::uint16_t s, std::uint16_t a, std::uint16_t d, std::uint16_t l, SpriteFontChar** c) noexcept
-        : m_Name(name), m_Size(s), m_Ascender(a), m_Descender(d), m_LineSpacing(l), m_Chars(c) { }
+        inline SpriteFont(const std::string& name, std::uint16_t a, std::uint16_t d, std::uint16_t l, SpriteFontChar** c) noexcept
+        : m_Name(name), m_Ascender(a), m_Descender(d), m_LineSpacing(l), m_Chars(c) { }
 
         ~SpriteFont();
     };
