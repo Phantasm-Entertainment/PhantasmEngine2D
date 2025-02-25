@@ -2,6 +2,7 @@
 #define PHENGINE_GRAPHICS_SHADER_H_
 
 #include <memory>
+#include <iostream>
 
 #include "PhEngine/Internal/Setup.h"
 #include "PhEngine/GraphicsDevice.h"
@@ -14,10 +15,12 @@ namespace PHENGINE_GRAPHICS_NAMESPACE
     private:
         Window* m_Window;
         GLuint m_Program;
-
-        Shader(GLuint);
     public:
-        
+        inline Shader(Window* win, GLuint p) : m_Window(win), m_Program(p) { }
+
+        void Use();
+
+        static std::shared_ptr<Shader> CreateShader(Window*, const std::string&, const std::string&);
     };
 }
 

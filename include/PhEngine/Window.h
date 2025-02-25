@@ -11,8 +11,8 @@
 
 namespace PHENGINE_NAMESPACE
 {
-    class PHENGINE_EXPORT ImplWindowData;
-
+    //class PHENGINE_EXPORT ImplWindowData;
+    
     class PHENGINE_EXPORT Window
     {
         friend class Game;
@@ -36,6 +36,7 @@ namespace PHENGINE_NAMESPACE
         inline GraphicsDevice* const GetGraphicsDevice() const noexcept { return m_GraphicsDevice; }
 
         void Center() const noexcept;
+        void SetSize(std::uint16_t, std::uint16_t) noexcept;
         void Clear(float, float, float, float) const noexcept;
         inline void Clear() const noexcept { Clear(0.0f, 0.0f, 0.0f, 1.0f); }
     };

@@ -23,7 +23,7 @@ namespace PHENGINE_NAMESPACE
         inline const std::vector<Monitor>& GetMonitors() const noexcept { return m_Monitors; }
         inline const Monitor& GetPrimaryMonitor() const noexcept { return m_Monitors[0]; }
 
-        inline const Graphics::GL* const GetGL() const noexcept { return m_GL; }
+        inline Graphics::GL* const GetGL() const noexcept { return m_GL; }
     };
 }
 

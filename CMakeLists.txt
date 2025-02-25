@@ -24,7 +24,9 @@ set(PHENGINE_SRC_FILES
     src/TextureAtlas.cpp
     src/Window.cpp
 
+    src/Graphics/BatchRenderer.cpp
     src/Graphics/GL.cpp
+    src/Graphics/Shader.cpp
     src/Graphics/SpriteFont.cpp
 
     src/Math/Calculator.cpp

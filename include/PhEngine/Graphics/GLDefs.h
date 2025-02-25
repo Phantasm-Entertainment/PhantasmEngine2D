@@ -1,3 +1,5 @@
+#include <cstdint>
+
 typedef unsigned int GLenum;
 typedef unsigned char GLboolean;
 typedef unsigned int GLbitfield;
@@ -14,6 +16,18 @@ typedef double GLdouble;
 typedef double GLclampd;
 typedef void GLvoid;
 typedef char GLchar;
+#if defined(_WIN64)
+typedef signed long long int GLsizeiptr;
+#else
+typedef signed long int GLsizeiptr;
+#endif
+#if defined(__SIZEOF_LONG__) && defined(__SIZEOF_POINTER__) && __SIZEOF_POINTER__ > __SIZEOF_LONG__
+typedef intptr_t GLintptr;
+#elif defined(_WIN64)
+typedef signed long long int GLintptr;
+#else
+typedef signed long int GLintptr;
+#endif
 
 #define GL_DEPTH_BUFFER_BIT 0x00000100
 #define GL_STENCIL_BUFFER_BIT 0x00000400

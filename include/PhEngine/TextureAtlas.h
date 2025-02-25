@@ -35,6 +35,8 @@ namespace PHENGINE_NAMESPACE
     public:
         TextureAtlas(Graphics::GL*, std::vector<AtlasPage>);
 
+        inline void Use() { m_GL->BindTexture(GL_TEXTURE_2D_ARRAY, m_TexArray); }
+
         inline ~TextureAtlas() { if (m_TexArray != 0) { m_GL->DeleteTextures(1, &m_TexArray); } }
 
         inline TextureAtlas(TextureAtlas&& atlas) : m_Pages(std::move(atlas.m_Pages)) { atlas.m_TexArray = 0; }

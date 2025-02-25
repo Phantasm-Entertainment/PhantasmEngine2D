@@ -33,6 +33,16 @@ namespace PHENGINE_NAMESPACE
         }
     }
 
+    void Window::SetSize(std::uint16_t w, std::uint16_t h) noexcept
+    {
+        if (!m_Fullscreen)
+        {
+            m_Resolution = Resolution(w, h);
+            SDL_SetWindowSize(m_WinHandle, w, h);
+            m_GraphicsDevice->GetGL()->Viewport(0, 0, m_Resolution.GetWidth(), m_Resolution.GetHeight());
+        }
+    }
+
     void Window::Clear(float r, float g, float b, float a) const noexcept
     {
         const Graphics::GL* gl = m_GraphicsDevice->GetGL();

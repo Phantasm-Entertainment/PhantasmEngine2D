@@ -39,8 +39,11 @@ namespace PHENGINE_NAMESPACE
         inline ContentManager(const Graphics::GL* const gl)
         : m_GL(const_cast<Graphics::GL*>(gl)), m_Atlas(nullptr) { }
 
+        inline TextureAtlas* GetTextureAtlas() { return m_Atlas; }
+
         inline ~ContentManager() { delete m_Atlas; }
 
+        Graphics::Texture2D* GetTexture(const std::string&);
         void LoadContentFile(const std::string&);
     };
 }

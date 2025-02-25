@@ -50,6 +50,18 @@ namespace PHENGINE_NAMESPACE
         std::vector<SpriteFontCharInfo> m_Chars;
     };
 
+    Graphics::Texture2D* ContentManager::GetTexture(const std::string& name)
+    {
+        auto it = m_Textures.find(name);
+
+        if (it == m_Textures.end())
+        {
+            return nullptr;
+        }
+
+        return &it->second;
+    }
+
     void ContentManager::LoadContentFile(const std::string& path)
     {
         if (m_Atlas != nullptr) { delete m_Atlas; }
