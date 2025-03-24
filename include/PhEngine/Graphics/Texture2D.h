@@ -18,7 +18,18 @@ namespace PHENGINE_GRAPHICS_NAMESPACE
         inline Texture2D(std::string n, std::uint16_t w, std::uint16_t h, AtlasRef ar) noexcept
         : m_Name(std::move(n)), m_Width(w), m_Height(h), m_AtlasRef(std::move(ar)) { }
 
-        inline Texture2D(const Texture2D&& t) : m_Name(std::move(t.m_Name)), m_Width(t.m_Width), m_Height(t.m_Height), m_AtlasRef(std::move(t.m_AtlasRef)) { }
+        inline Texture2D(const Texture2D& t) noexcept : m_Name(t.m_Name), m_Width(t.m_Width), m_Height(t.m_Height), m_AtlasRef(t.m_AtlasRef) { }
+
+        inline Texture2D(const Texture2D&& t) noexcept : m_Name(std::move(t.m_Name)), m_Width(t.m_Width), m_Height(t.m_Height), m_AtlasRef(std::move(t.m_AtlasRef)) { }
+
+        inline Texture2D& operator=(const Texture2D& t) noexcept
+        {
+            m_Name = t.m_Name;
+            m_Width = t.m_Width;
+            m_Height = t.m_Height;
+            m_AtlasRef = t.m_AtlasRef;
+            return *this;
+        }
 
         inline std::uint16_t GetWidth() const noexcept { return m_Width; }
         inline std::uint16_t GetHeight() const noexcept { return m_Height; }
