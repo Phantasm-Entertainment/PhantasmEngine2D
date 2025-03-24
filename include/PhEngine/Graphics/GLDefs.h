@@ -5,6 +5,7 @@
 #define WIN32_LEAN_AND_MEAN 1
 #endif
 #include <windows.h>
+#undef GetMessage
 #endif
 
 #ifndef APIENTRY
