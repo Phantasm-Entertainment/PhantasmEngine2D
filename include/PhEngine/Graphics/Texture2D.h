@@ -20,7 +20,7 @@ namespace PHENGINE_GRAPHICS_NAMESPACE
 
         inline Texture2D(const Texture2D&& t) : m_Name(std::move(t.m_Name)), m_Width(t.m_Width), m_Height(t.m_Height), m_AtlasRef(std::move(t.m_AtlasRef)) { }
 
-        inline std::uint16_t GetWidth() const noexcept { return m_Height; }
+        inline std::uint16_t GetWidth() const noexcept { return m_Width; }
         inline std::uint16_t GetHeight() const noexcept { return m_Height; }
         inline const AtlasRef& GetAtlasRef() const noexcept { return m_AtlasRef; }
     };

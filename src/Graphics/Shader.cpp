@@ -2,9 +2,21 @@
 
 namespace PHENGINE_GRAPHICS_NAMESPACE
 {
-    void Shader::Use()
+    void Shader::Use() const
     {
-        m_Window->GetGraphicsDevice()->GetGL()->UseProgram(m_Program);
+        m_GL->UseProgram(m_Program);
+    }
+
+    void Shader::SetUniform(const std::string& name, const Math::Vector2f& vec) const
+    {
+        GLint loc = m_GL->GetUniformLocation(m_Program, name.c_str());
+
+        if (loc == -1)
+        {
+            throw Exception("invalid uniform '" + name + "'");
+        }
+
+        m_GL->Uniform2f(loc, vec.X, vec.Y);
     }
 
     std::shared_ptr<Shader> Shader::CreateShader(Window* win, const std::string& vss, const std::string& fss)
@@ -24,7 +36,7 @@ namespace PHENGINE_GRAPHICS_NAMESPACE
             gl->GetShaderInfoLog(vs, 1024, NULL, log);
             gl->DeleteShader(vs);
             std::string logStr = std::string("Couldn't compile vertex shader: ") + log;
-            std::cout << logStr << '\n';
+            std::cerr << logStr << '\n';
             throw Exception(logStr);
         }
 
@@ -40,7 +52,7 @@ namespace PHENGINE_GRAPHICS_NAMESPACE
             gl->DeleteShader(vs);
             gl->DeleteShader(fs);
             std::string logStr = std::string("Couldn't compile fragment shader: ") + log;
-            std::cout << logStr << '\n';
+            std::cerr << logStr << '\n';
             throw Exception(logStr);
         }
 
@@ -56,7 +68,9 @@ namespace PHENGINE_GRAPHICS_NAMESPACE
         {
             gl->GetProgramInfoLog(program, 1024, NULL, log);
             gl->DeleteProgram(program);
-            throw Exception("Couldn't link shader program: " + std::string(log));
+            std::string logStr = std::string("Couldn't link shader program: ") + log;
+            std::cerr << logStr << '\n';
+            throw Exception(logStr);
         }
 
         return std::make_shared<Shader>(win, program);

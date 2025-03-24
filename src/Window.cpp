@@ -1,13 +1,22 @@
 #include "PhEngine/Window.h"
 
+#include <iostream>
+
 namespace PHENGINE_NAMESPACE
 {
     Window::Window(GraphicsDevice* gd, std::shared_ptr<GameUpdate> gm) : m_GraphicsDevice(gd), m_GameUpdate(gm), m_Closed(false), m_Resolution(800, 600),
     m_Fullscreen(false)
     {
         SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+    #ifdef PHENGINE_DEBUG
+        SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
+        SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
+        SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, SDL_GL_CONTEXT_DEBUG_FLAG);
+    #elif
         SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
         SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
+    #endif
+        
         m_WinHandle = SDL_CreateWindow("Game", 800, 600, SDL_WINDOW_OPENGL);
        
         if (m_WinHandle == nullptr)
@@ -59,10 +68,12 @@ namespace PHENGINE_NAMESPACE
             switch (event.type)
             {
             case SDL_EVENT_KEY_DOWN:
-                m_GameUpdate->m_Keys[event.key.scancode] = true;
+                std::cout << "SDL_EVENT_KEY_DOWN\n";
+                m_GameUpdate->m_Keys[event.key.key] = true;
                 break;
             case SDL_EVENT_KEY_UP:
-                m_GameUpdate->m_Keys[event.key.scancode] = false;
+            std::cout << "SDL_EVENT_KEY_UP\n";
+                m_GameUpdate->m_Keys[event.key.key] = false;
                 break;
             case SDL_EVENT_MOUSE_BUTTON_DOWN:
                 m_GameUpdate->m_MouseButtons[event.button.button] = true;

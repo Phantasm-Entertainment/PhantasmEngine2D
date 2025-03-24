@@ -4,8 +4,12 @@
 #include <cstdint>
 #include <memory>
 #include <vector>
+#include <unordered_map>
+#include <string>
+#include <optional>
 
 #include "PhEngine/Internal/Setup.h"
+#include "PhEngine/Graphics/AtlasRef.h"
 #include "PhEngine/Graphics/GL.h"
 
 namespace PHENGINE_NAMESPACE

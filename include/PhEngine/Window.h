@@ -37,6 +37,7 @@ namespace PHENGINE_NAMESPACE
 
         void Center() const noexcept;
         void SetSize(std::uint16_t, std::uint16_t) noexcept;
+        inline const Resolution& GetSize() const noexcept { return m_Resolution; }
         void Clear(float, float, float, float) const noexcept;
         inline void Clear() const noexcept { Clear(0.0f, 0.0f, 0.0f, 1.0f); }
     };

@@ -1,6 +1,10 @@
 #ifndef PHENGINE_GRAPHICS_GL_H_
 #define PHENGINE_GRAPHICS_GL_H_
 
+#ifdef PHENGINE_DEBUG
+#include <iostream>
+#endif
+
 #include <SDL3/SDL.h>
 
 #include "PhEngine/Internal/Setup.h"
@@ -30,6 +34,9 @@ namespace PHENGINE_GRAPHICS_NAMESPACE
         void (*m_LinkProgram)(GLuint);
         void (*m_DeleteProgram)(GLuint);
         void (*m_UseProgram)(GLuint);
+        // uniform functions
+        GLint (*m_GetUniformLocation)(GLuint,const GLchar*);
+        void (*m_Uniform2f)(GLint,GLfloat,GLfloat);
 
         // texture functions
         void (*m_GenTextures)(GLsizei,GLuint*);
@@ -75,6 +82,8 @@ namespace PHENGINE_GRAPHICS_NAMESPACE
         inline void LinkProgram(GLuint program) { m_LinkProgram(program); }
         inline void DeleteProgram(GLuint program) { m_DeleteProgram(program); }
         inline void UseProgram(GLuint program) { m_UseProgram(program); }
+        inline GLint GetUniformLocation(GLuint program, const GLchar* name) { return m_GetUniformLocation(program, name); }
+        inline void Uniform2f(GLint loc, GLfloat v0, GLfloat v1) { m_Uniform2f(loc, v0, v1); }
 
         inline void GenTextures(GLsizei n, GLuint* textures) { m_GenTextures(n, textures); }
         inline void DeleteTextures(GLsizei n, const GLuint* textures) { m_DeleteTextures(n, textures); }

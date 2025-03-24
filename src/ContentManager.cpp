@@ -1,6 +1,7 @@
 #include "PhEngine/ContentManager.h"
 
 #include <brotli/decode.h>
+#include <iostream>
 
 namespace PHENGINE_NAMESPACE
 {
@@ -50,13 +51,13 @@ namespace PHENGINE_NAMESPACE
         std::vector<SpriteFontCharInfo> m_Chars;
     };
 
-    Graphics::Texture2D* ContentManager::GetTexture(const std::string& name)
+    std::optional<Graphics::Texture2D*> ContentManager::GetTexture(const std::string& name)
     {
         auto it = m_Textures.find(name);
 
         if (it == m_Textures.end())
         {
-            return nullptr;
+            return std::nullopt;
         }
 
         return &it->second;
@@ -133,6 +134,7 @@ namespace PHENGINE_NAMESPACE
                 if (std::fread(&buffer, 1, nameLen, fp.get()) != nameLen) { throw std::string("not a valid content file 7"); }
 
                 std::string name(buffer, nameLen);
+                std::cout << name << " (" << std::to_string(x) << ", " << std::to_string(y) << ", " << std::to_string(w) << ", " << std::to_string(h) << ")\n";
 
                 if (std::fread(&buffer, 1, 1, fp.get()) != 1) { throw std::string("not a valid content file 8"); }
 

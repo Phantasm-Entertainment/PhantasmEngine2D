@@ -6,7 +6,7 @@
 #include <SDL3/SDL.h>
 
 #include "PhEngine/Internal/Setup.h"
-#include "PhEngine/Math/Vector2.h"
+#include "PhEngine/Math/Vector.h"
 
 namespace PHENGINE_NAMESPACE
 {
@@ -30,7 +30,7 @@ namespace PHENGINE_NAMESPACE
         bool* m_Keys;
         bool* m_OldMouseButtons;
         bool* m_MouseButtons;
-        Math::Vector2 m_MousePos;
+        Math::Vector2f m_MousePos;
 
         void InputUpdate();
     public:
@@ -42,7 +42,7 @@ namespace PHENGINE_NAMESPACE
 
         bool IsKeyDown(int);
         bool IsKeyPressed(int);
-        inline const Math::Vector2& GetMousePos() const noexcept { return m_MousePos; }
+        inline const Math::Vector2f& GetMousePos() const noexcept { return m_MousePos; }
     };
 }
 

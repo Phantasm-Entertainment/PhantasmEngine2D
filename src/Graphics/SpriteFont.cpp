@@ -4,7 +4,7 @@ namespace PHENGINE_GRAPHICS_NAMESPACE
 {
     SpriteFont::~SpriteFont()
     {
-        for (std::uint8_t i = 0; i < 127; ++i)
+        for (std::uint8_t i = 0; i < 126; ++i)
         {
             if (m_Chars[i])
             {

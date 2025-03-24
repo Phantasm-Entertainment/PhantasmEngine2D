@@ -16,7 +16,9 @@ namespace PHENGINE_GRAPHICS_NAMESPACE
         inline AtlasRef(std::uint8_t p, std::uint16_t x, std::uint16_t y) noexcept
         : m_Page(p), m_X(x), m_Y(y) { }
 
-        inline AtlasRef(const AtlasRef&& r) : m_Page(r.m_Page), m_X(r.m_X), m_Y(r.m_Y) { }
+        inline AtlasRef(const AtlasRef& r) noexcept : m_Page(r.m_Page), m_X(r.m_X), m_Y(r.m_Y) { }
+
+        inline AtlasRef(const AtlasRef&& r) noexcept : m_Page(r.m_Page), m_X(r.m_X), m_Y(r.m_Y) { }
 
         inline std::uint8_t GetPage() const noexcept { return m_Page; }
         inline std::uint16_t GetX() const noexcept { return m_X; }
