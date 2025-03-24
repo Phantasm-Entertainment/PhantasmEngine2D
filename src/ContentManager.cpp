@@ -68,9 +68,11 @@ namespace PHENGINE_NAMESPACE
         if (m_Atlas != nullptr) { delete m_Atlas; }
         m_Textures.clear();
         m_Fonts.clear();
-        std::unique_ptr<std::FILE, decltype(&PE_CloseFile)> fp(std::fopen(path.c_str(), "rb"), &PE_CloseFile);
+        std::FILE* rawFp = std::fopen(path.c_str(), "rb");
 
-        if (!fp) { throw Exception("could not open file"); }
+        if (!rawFp) { throw Exception("could not open file"); }
+
+        std::unique_ptr<std::FILE, decltype(&PE_CloseFile)> fp(rawFp, &PE_CloseFile);
 
         char buffer[255];
 
