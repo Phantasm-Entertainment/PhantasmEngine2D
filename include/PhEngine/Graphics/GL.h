@@ -19,6 +19,8 @@ namespace PHENGINE_GRAPHICS_NAMESPACE
         void (*m_ClearColor)(GLfloat,GLfloat,GLfloat,GLfloat);
         void (*m_Clear)(GLbitfield);
         void (*m_Viewport)(GLint,GLint,GLsizei,GLsizei);
+        const GLubyte* (*m_GetString)(GLenum);
+        const GLubyte* (*m_GetStringi)(GLenum,GLuint);
 
         // shader functions
         GLuint (*m_CreateShader)(GLenum);
@@ -68,6 +70,8 @@ namespace PHENGINE_GRAPHICS_NAMESPACE
         inline void ClearColor(GLfloat r, GLfloat g, GLfloat b, GLfloat a) const noexcept { m_ClearColor(r, g, b, a); }
         inline void Clear(GLbitfield mask) const noexcept { m_Clear(mask); }
         inline void Viewport(GLint x, GLint y, GLsizei width, GLsizei height) { m_Viewport(x, y, width, height); }
+        inline const GLubyte* GetString(GLenum name) { return m_GetString(name); }
+        inline const GLubyte* GetStringi(GLenum name, GLuint index) { return m_GetStringi(name, index); }
 
         inline GLuint CreateShader(GLenum shaderType) { return m_CreateShader(shaderType); }
         inline void DeleteShader(GLuint shader) { m_DeleteShader(shader); }

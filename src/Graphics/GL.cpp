@@ -31,6 +31,15 @@ namespace PHENGINE_GRAPHICS_NAMESPACE
         m_ClearColor = (void(*)(GLfloat,GLfloat,GLfloat,GLfloat))GET_PROC_ADDRESS("glClearColor");
         m_Clear = (void(*)(GLbitfield))GET_PROC_ADDRESS("glClear");
         m_Viewport = (void(*)(GLint,GLint,GLsizei,GLsizei))GET_PROC_ADDRESS("glViewport");
+        m_GetString = (const GLubyte*(*)(GLenum))GET_PROC_ADDRESS("glGetString");
+        m_GetStringi = (const GLubyte*(*)(GLenum,GLuint))GET_PROC_ADDRESS("glGetStringi");
+
+    #ifdef PHENGINE_DEBUG
+        std::cout << "Phantasm Engine 2D debug mode active.\n";
+        std::cout << "Version: " << m_GetString(GL_VERSION) << '\n';
+        std::cout << "Vendor: " << m_GetString(GL_VENDOR) << '\n';
+        std::cout << "Renderer: " << m_GetString(GL_RENDERER) << '\n';
+    #endif
 
         m_CreateShader = (GLuint(*)(GLenum))GET_PROC_ADDRESS("glCreateShader");
         m_DeleteShader = (void(*)(GLuint))GET_PROC_ADDRESS("glDeleteShader");
