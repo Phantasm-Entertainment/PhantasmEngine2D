@@ -21,10 +21,16 @@ namespace PHENGINE_NAMESPACE
        
         if (m_WinHandle == nullptr)
         {
-            throw Exception("?????");
+            throw Exception("couldn't create window");
         }
 
         m_Context = SDL_GL_CreateContext(m_WinHandle);
+
+        if (m_Context == nullptr)
+        {
+            throw Exception("couldn't create OpenGL context");
+        }
+
         Center();
     }
 
@@ -52,6 +58,12 @@ namespace PHENGINE_NAMESPACE
         }
     }
 
+    void Window::SetTitle(const std::string& title) noexcept
+    {
+        m_Title = title;
+        SDL_SetWindowTitle(m_WinHandle, m_Title.c_str());
+    }
+
     void Window::Clear(float r, float g, float b, float a) const noexcept
     {
         const Graphics::GL* gl = m_GraphicsDevice->GetGL();
@@ -68,11 +80,9 @@ namespace PHENGINE_NAMESPACE
             switch (event.type)
             {
             case SDL_EVENT_KEY_DOWN:
-                std::cout << "SDL_EVENT_KEY_DOWN\n";
                 m_GameUpdate->m_Keys[event.key.key] = true;
                 break;
             case SDL_EVENT_KEY_UP:
-            std::cout << "SDL_EVENT_KEY_UP\n";
                 m_GameUpdate->m_Keys[event.key.key] = false;
                 break;
             case SDL_EVENT_MOUSE_BUTTON_DOWN:

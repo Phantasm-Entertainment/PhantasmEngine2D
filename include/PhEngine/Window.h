@@ -23,6 +23,7 @@ namespace PHENGINE_NAMESPACE
         SDL_GLContext m_Context;
         bool m_Closed;
 
+        std::string m_Title;
         Resolution m_Resolution;
         bool m_Fullscreen;
 
@@ -38,6 +39,8 @@ namespace PHENGINE_NAMESPACE
         void Center() const noexcept;
         void SetSize(std::uint16_t, std::uint16_t) noexcept;
         inline const Resolution& GetSize() const noexcept { return m_Resolution; }
+        void SetTitle(const std::string&) noexcept;
+        inline const std::string& GetTitle() const noexcept { return m_Title; }
         void Clear(float, float, float, float) const noexcept;
         inline void Clear() const noexcept { Clear(0.0f, 0.0f, 0.0f, 1.0f); }
     };

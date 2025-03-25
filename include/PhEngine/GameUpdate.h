@@ -18,6 +18,7 @@ namespace PHENGINE_NAMESPACE
         std::chrono::time_point<std::chrono::steady_clock> m_Now;
         double m_TotalTime;
         double m_Delta;
+        std::uint32_t m_FPS;
 
         inline void Tick()
         {
@@ -39,6 +40,7 @@ namespace PHENGINE_NAMESPACE
 
         inline double GetTotalTime() const noexcept { return m_TotalTime; }
         inline double GetDelta() const noexcept { return m_Delta; }
+        inline std::uint32_t GetFPS() const noexcept { return m_FPS; }
 
         bool IsKeyDown(int);
         bool IsKeyPressed(int);

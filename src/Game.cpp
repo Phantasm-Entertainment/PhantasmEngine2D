@@ -52,6 +52,9 @@ namespace PHENGINE_NAMESPACE
         double newTime, frameTime, deltaTime = 1.0 / updateRate;
         gameUpdate->m_Delta = deltaTime;
 
+        std::uint32_t frames = 0;
+        double lastFrameCount = 0.0;
+
         while (!m_Exit)
         {
             newTime = gameUpdate->GetTimeNow();
@@ -67,10 +70,19 @@ namespace PHENGINE_NAMESPACE
                 gameUpdate->Tick();
                 Update(gameUpdate);
                 accumulator -= deltaTime;
+                lastFrameCount += deltaTime;
+
+                if (lastFrameCount >= 1.0)
+                {
+                    lastFrameCount = 0.0;
+                    gameUpdate->m_FPS = frames;
+                    frames = 0;
+                }
             }
 
             gameDraw->m_Alpha = accumulator / deltaTime;
             Draw(gameDraw);
+            ++frames;
             m_Window->SwapBuffers();
         }
 

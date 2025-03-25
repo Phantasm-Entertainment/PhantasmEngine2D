@@ -38,12 +38,12 @@ namespace PHENGINE_NAMESPACE
     {
         for (unsigned short i = 0; i < SDL_SCANCODE_COUNT; ++i)
         {
-            m_Keys[i] = m_OldKeys[i];
+            m_OldKeys[i] = m_Keys[i];
         }
 
         for (unsigned short i = 0; i < NUM_MOUSE_BUTTONS; ++i)
         {
-            m_MouseButtons[i] = m_OldMouseButtons[i];
+            m_OldMouseButtons[i] = m_MouseButtons[i];
         }
     }
 
