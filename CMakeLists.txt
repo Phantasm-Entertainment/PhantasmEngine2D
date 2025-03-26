@@ -30,9 +30,9 @@ set(PHENGINE_SRC_FILES
     src/Graphics/SpriteFont.cpp
 )
 
-set(PHENGINE_WIN64_SRC_FILES
-
-)
+if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+    set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+endif()
 
 if(WIN32)
     if(PHENGINE_STATIC)
@@ -44,6 +44,7 @@ if(WIN32)
         target_compile_definitions(PhEngine PRIVATE PHENGINE_BUILDING_DLL)
         if(CMAKE_BUILD_TYPE STREQUAL "Debug")
             target_compile_definitions(PhEngine PRIVATE PHENGINE_DEBUG)
+            target_compile_options(PhEngine PRIVATE /fsanitize=address)
         endif()
         target_link_libraries(PhEngine ${BROTLI_LIBRARIES} SDL3::SDL3)
     endif()
@@ -57,6 +58,7 @@ else()
 	target_compile_definitions(PhEngine PRIVATE PHENGINE_BUILDING_DLL)
     if(CMAKE_BUILD_TYPE STREQUAL "Debug")
         target_compile_definitions(PhEngine PRIVATE PHENGINE_DEBUG)
+        target_compile_options(PhEngine PRIVATE -fsanitize=undefined -fsanitize=address)
     endif()
 	target_link_libraries(PhEngine ${BROTLI_LIBRARIES} SDL3::SDL3)
     endif()
