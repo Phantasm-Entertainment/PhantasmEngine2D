@@ -65,8 +65,11 @@ namespace PHENGINE_NAMESPACE
 
     GraphicsDevice::~GraphicsDevice()
     {
+        std::cout<<"GraphicsDevice::~GraphicsDevice()\n";
+
         if (m_GL)
         {
+            std::cout << "deleted GL\n";
             delete m_GL;
         }
     }

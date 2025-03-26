@@ -1,9 +1,9 @@
 #ifndef PHENGINE_GRAPHICS_GL_H_
 #define PHENGINE_GRAPHICS_GL_H_
 
-#ifdef PHENGINE_DEBUG
+//#ifdef PHENGINE_DEBUG
 #include <iostream>
-#endif
+//#endif
 
 #include <SDL3/SDL.h>
 
@@ -66,6 +66,7 @@ namespace PHENGINE_GRAPHICS_NAMESPACE
         void (*m_DrawElements)(GLenum,GLsizei,GLenum,const void*);
     public:
         GL();
+        inline ~GL() { std::cout<<"GL::~GL()\n"; }
 
         inline void ClearColor(GLfloat r, GLfloat g, GLfloat b, GLfloat a) const noexcept { m_ClearColor(r, g, b, a); }
         inline void Clear(GLbitfield mask) const noexcept { m_Clear(mask); }

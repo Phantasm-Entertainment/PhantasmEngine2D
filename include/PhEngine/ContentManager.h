@@ -10,6 +10,7 @@
 #include <cstring>
 #include <vector>
 #include <optional>
+#include <iostream>
 
 #include "PhEngine/Internal/Setup.h"
 #include "PhEngine/Exception.h"
@@ -42,7 +43,7 @@ namespace PHENGINE_NAMESPACE
 
         inline TextureAtlas* GetTextureAtlas() { return m_Atlas; }
 
-        inline ~ContentManager() { delete m_Atlas; }
+        inline ~ContentManager() { std::cout<<"ContentManager::~ContentManager()\n";delete m_Atlas; }
 
         std::optional<Graphics::Texture2D*> GetTexture(const std::string&);
         void LoadContentFile(const std::string&);

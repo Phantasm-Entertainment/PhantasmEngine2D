@@ -28,10 +28,10 @@ namespace PHENGINE_NAMESPACE
 
     GameUpdate::~GameUpdate()
     {
-        delete m_OldKeys;
-        delete m_Keys;
-        delete m_OldMouseButtons;
-        delete m_MouseButtons;
+        delete[] m_OldKeys;
+        delete[] m_Keys;
+        delete[] m_OldMouseButtons;
+        delete[] m_MouseButtons;
     }
 
     void GameUpdate::InputUpdate()

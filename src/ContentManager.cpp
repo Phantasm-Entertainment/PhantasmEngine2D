@@ -277,3 +277,4 @@ namespace PHENGINE_NAMESPACE
         m_Atlas = new TextureAtlas(m_GL, std::move(pages));
     }
 }
+#include <iostream>
