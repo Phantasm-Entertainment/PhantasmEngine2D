@@ -90,11 +90,14 @@ namespace PHENGINE_NAMESPACE
         }
 
     #ifdef PHENGINE_DEBUG
-        std::cout << "Enabling OpenGL debug messaging\n";
+        std::cout << "Vendor: " << m_GLCtx->GetString(GL_VENDOR) << '\n';
+        std::cout << "Renderer: " << m_GLCtx->GetString(GL_RENDERER) << '\n';
+        std::cout << "Version: " << m_GLCtx->GetString(GL_VERSION) << '\n';
         m_GLCtx->Enable(GL_DEBUG_OUTPUT);
         m_GLCtx->Enable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
         m_GLCtx->DebugMessageCallback(opengl_debug_callback, nullptr);
         m_GLCtx->DebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, nullptr, GL_TRUE);
+        std::cout << "Enabled OpenGL debug messaging.\n";
     #endif
     }
 }
