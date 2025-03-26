@@ -50,11 +50,9 @@ namespace PHENGINE_NAMESPACE
                     res.emplace_back(displayModes[j]->w, displayModes[j]->h);
                 }
 
-                float r = static_cast<float>(displayModes[j]->refresh_rate);
-
-                if (r > refreshRate)
+                if (displayModes[j]->refresh_rate > refreshRate)
                 {
-                    refreshRate = r;
+                    refreshRate = displayModes[j]->refresh_rate;
                 }
             }
 
