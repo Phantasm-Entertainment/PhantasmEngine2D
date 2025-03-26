@@ -2,7 +2,7 @@
 
 namespace PHENGINE_NAMESPACE
 {
-    GraphicsDevice::GraphicsDevice() : m_GL(nullptr)
+    GraphicsDevice::GraphicsDevice() : m_GLCtx(nullptr)
     {
         int count;
         SDL_DisplayID* displayIds = SDL_GetDisplays(&count);
@@ -65,17 +65,36 @@ namespace PHENGINE_NAMESPACE
 
     GraphicsDevice::~GraphicsDevice()
     {
-        std::cout<<"GraphicsDevice::~GraphicsDevice()\n";
-
-        if (m_GL)
+        if (m_GLCtx != nullptr)
         {
-            std::cout << "deleted GL\n";
-            delete m_GL;
+            delete m_GLCtx;
         }
     }
 
+#ifdef PHENGINE_DEBUG
+    void APIENTRY opengl_debug_callback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar* message, const void* user)
+    {
+        std::cerr << message << '\n';
+    }
+#endif
+
     void GraphicsDevice::InitGL()
     {
-        m_GL = new Graphics::GL();
+        m_GLCtx = new GladGLContext;
+
+        if (gladLoadGLContext(m_GLCtx, SDL_GL_GetProcAddress) == 0)
+        {
+            delete m_GLCtx;
+            m_GLCtx = nullptr;
+            throw Exception("couldn't load OpenGL functions");
+        }
+
+    #ifdef PHENGINE_DEBUG
+        std::cout << "Enabling OpenGL debug messaging\n";
+        m_GLCtx->Enable(GL_DEBUG_OUTPUT);
+        m_GLCtx->Enable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
+        m_GLCtx->DebugMessageCallback(opengl_debug_callback, nullptr);
+        m_GLCtx->DebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, nullptr, GL_TRUE);
+    #endif
     }
 }

@@ -50,11 +50,23 @@ namespace PHENGINE_NAMESPACE
         std::vector<SpriteFontCharInfo> m_Chars;
     };
 
-    std::optional<Graphics::Texture2D*> ContentManager::GetTexture(const std::string& name)
+    std::optional<Graphics::Texture2D*> ContentManager::GetTexture(const std::string& name) noexcept
     {
         auto it = m_Textures.find(name);
 
         if (it == m_Textures.end())
+        {
+            return std::nullopt;
+        }
+
+        return &it->second;
+    }
+
+    std::optional<Graphics::SpriteFont*> ContentManager::GetFont(const std::string& name) noexcept
+    {
+        auto it = m_Fonts.find(name);
+
+        if (it == m_Fonts.end())
         {
             return std::nullopt;
         }

@@ -30,7 +30,7 @@ namespace PHENGINE_GRAPHICS_NAMESPACE
     private:
         Window* m_Window;
         ContentManager* m_ContentManager;
-        GL* m_GL;
+        GladGLContext* m_GL;
         std::shared_ptr<Shader> m_Shader;
         GLuint m_VAO, m_VBO, m_EBO;
         std::unique_ptr<float[]> m_Verts;

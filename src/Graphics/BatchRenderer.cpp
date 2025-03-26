@@ -30,29 +30,23 @@ namespace PHENGINE_GRAPHICS_NAMESPACE
         m_GL->BindBuffer(GL_ARRAY_BUFFER, m_VBO);
         m_GL->BindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_EBO);
 
-        //m_GL->BufferData(GL_ARRAY_BUFFER, sizeof(testVerts), testVerts, GL_STATIC_DRAW);
         m_GL->BufferData(GL_ARRAY_BUFFER, 20 * sizeof(float) * PHENGINE_BATCHRENDERER_MAXJOBS, nullptr, GL_DYNAMIC_DRAW);
 
         GLuint* indices = new GLuint[6 * PHENGINE_BATCHRENDERER_MAXJOBS];
+        GLuint ind = 0;
 
         for (std::size_t i = 0; i < 6 * PHENGINE_BATCHRENDERER_MAXJOBS; i += 6)
         {
-            indices[i] = i;
-            indices[i+1] = i + 1;
-            indices[i+2] = i + 2;
-            indices[i+3] = i + 2;
-            indices[i+4] = i + 3;
-            indices[i+5] = i;
+            indices[i] = ind;
+            indices[i+1] = ind + 1;
+            indices[i+2] = ind + 2;
+            indices[i+3] = ind + 2;
+            indices[i+4] = ind + 3;
+            indices[i+5] = ind;
+            ind += 4;
         }
 
-        // indices[0] = 0;
-        // indices[1] = 1;
-        // indices[2] = 2;
-        // indices[3] = 2;
-        // indices[4] = 3;
-        // indices[5] = 0;
-
-        m_GL->BufferData(GL_ELEMENT_ARRAY_BUFFER, 6 * PHENGINE_BATCHRENDERER_MAXJOBS, indices, GL_STATIC_DRAW);
+        m_GL->BufferData(GL_ELEMENT_ARRAY_BUFFER, 6 * PHENGINE_BATCHRENDERER_MAXJOBS * sizeof(GLuint), indices, GL_STATIC_DRAW);
         delete[] indices;
 
         m_GL->VertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
@@ -93,6 +87,8 @@ namespace PHENGINE_GRAPHICS_NAMESPACE
         m_Shader->SetUniform("windowSize", Math::Vector2f(m_Window->GetSize().GetWidth(), m_Window->GetSize().GetHeight()));
         m_ContentManager->GetTextureAtlas()->Use();
         m_GL->BindVertexArray(m_VAO);
+        m_GL->BindBuffer(GL_ARRAY_BUFFER, m_VBO);
+        m_GL->BindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_EBO);
         float* vData = new float[20];
 
         for (int i = 0; i < m_Jobs.size(); ++i)

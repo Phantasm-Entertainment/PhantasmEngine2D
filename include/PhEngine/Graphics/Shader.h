@@ -17,7 +17,7 @@ namespace PHENGINE_GRAPHICS_NAMESPACE
     {
     private:
         Window* m_Window;
-        GL* m_GL;
+        GladGLContext* m_GL;
         GLuint m_Program;
     public:
         inline Shader(Window* win, GLuint p) : m_Window(win), m_GL(win->GetGraphicsDevice()->GetGL()), m_Program(p) { }

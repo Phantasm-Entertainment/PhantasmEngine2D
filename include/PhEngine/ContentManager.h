@@ -10,7 +10,6 @@
 #include <cstring>
 #include <vector>
 #include <optional>
-#include <iostream>
 
 #include "PhEngine/Internal/Setup.h"
 #include "PhEngine/Exception.h"
@@ -35,17 +34,18 @@ namespace PHENGINE_NAMESPACE
         std::unordered_map<std::string, Graphics::Texture2D> m_Textures;
         std::unordered_map<std::string, Graphics::SpriteFont> m_Fonts;
 
-        Graphics::GL* m_GL;
+        GladGLContext* m_GL;
         TextureAtlas* m_Atlas;
     public:
-        inline ContentManager(const Graphics::GL* const gl)
-        : m_GL(const_cast<Graphics::GL*>(gl)), m_Atlas(nullptr) { }
+        inline ContentManager(GladGLContext* const gl)
+        : m_GL(const_cast<GladGLContext*>(gl)), m_Atlas(nullptr) { }
 
         inline TextureAtlas* GetTextureAtlas() { return m_Atlas; }
 
-        inline ~ContentManager() { std::cout<<"ContentManager::~ContentManager()\n";delete m_Atlas; }
+        inline ~ContentManager() { delete m_Atlas; }
 
-        std::optional<Graphics::Texture2D*> GetTexture(const std::string&);
+        std::optional<Graphics::Texture2D*> GetTexture(const std::string&) noexcept;
+        std::optional<Graphics::SpriteFont*> GetFont(const std::string&) noexcept;
         void LoadContentFile(const std::string&);
     };
 }

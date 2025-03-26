@@ -21,7 +21,6 @@ namespace PHENGINE_NAMESPACE
 
     Game::~Game()
     {
-        std::cout << "Game::~Game()\n";
         ModifyRunningGame(this, false);
         SDL_Quit();
     }

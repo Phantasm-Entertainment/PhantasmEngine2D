@@ -1,7 +1,5 @@
 #include "PhEngine/Window.h"
 
-#include <iostream>
-
 namespace PHENGINE_NAMESPACE
 {
     Window::Window(GraphicsDevice* gd, std::shared_ptr<GameUpdate> gm) : m_GraphicsDevice(gd), m_GameUpdate(gm), m_Closed(false), m_Resolution(800, 600),
@@ -31,7 +29,7 @@ namespace PHENGINE_NAMESPACE
             throw Exception("couldn't create OpenGL context");
         }
 
-        Center();
+        SDL_GL_SetSwapInterval(1);
     }
 
     Window::~Window()
@@ -66,7 +64,7 @@ namespace PHENGINE_NAMESPACE
 
     void Window::Clear(float r, float g, float b, float a) const noexcept
     {
-        const Graphics::GL* gl = m_GraphicsDevice->GetGL();
+        GladGLContext* gl = m_GraphicsDevice->GetGL();
         gl->ClearColor(r, g, b, a);
         gl->Clear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     }
@@ -80,16 +78,16 @@ namespace PHENGINE_NAMESPACE
             switch (event.type)
             {
             case SDL_EVENT_KEY_DOWN:
-                m_GameUpdate->m_Keys[event.key.key] = true;
+                m_GameUpdate->m_Keys[event.key.scancode] = true;
                 break;
             case SDL_EVENT_KEY_UP:
-                m_GameUpdate->m_Keys[event.key.key] = false;
+                m_GameUpdate->m_Keys[event.key.scancode] = false;
                 break;
             case SDL_EVENT_MOUSE_BUTTON_DOWN:
-                m_GameUpdate->m_MouseButtons[event.button.button] = true;
+                m_GameUpdate->m_MouseButtons[event.button.button - 1] = true;
                 break;
             case SDL_EVENT_MOUSE_BUTTON_UP:
-                m_GameUpdate->m_MouseButtons[event.button.button] = false;
+                m_GameUpdate->m_MouseButtons[event.button.button - 1] = false;
                 break;
             case SDL_EVENT_MOUSE_MOTION:
                 m_GameUpdate->m_MousePos.X = event.motion.x;

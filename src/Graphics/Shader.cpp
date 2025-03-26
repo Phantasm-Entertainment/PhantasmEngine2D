@@ -21,7 +21,7 @@ namespace PHENGINE_GRAPHICS_NAMESPACE
 
     std::shared_ptr<Shader> Shader::CreateShader(Window* win, const std::string& vss, const std::string& fss)
     {
-        GL* gl = win->GetGraphicsDevice()->GetGL();
+        GladGLContext* gl = win->GetGraphicsDevice()->GetGL();
         int success;
         char log[1024];
 

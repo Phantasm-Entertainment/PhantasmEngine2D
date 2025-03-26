@@ -33,11 +33,11 @@ namespace PHENGINE_NAMESPACE
     class PHENGINE_EXPORT TextureAtlas
     {
     private:
-        Graphics::GL* m_GL;
+        GladGLContext* m_GL;
         std::vector<AtlasPage> m_Pages;
         GLuint m_TexArray;
     public:
-        TextureAtlas(Graphics::GL*, std::vector<AtlasPage>);
+        TextureAtlas(GladGLContext*, std::vector<AtlasPage>);
 
         inline void Use() { m_GL->BindTexture(GL_TEXTURE_2D_ARRAY, m_TexArray); }
 

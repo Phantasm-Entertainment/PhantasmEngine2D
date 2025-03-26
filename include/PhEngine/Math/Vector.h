@@ -19,6 +19,16 @@ namespace PHENGINE_MATH_NAMESPACE
 
         Vector2() noexcept : X(static_cast<t_Type>(0)), Y(static_cast<t_Type>(0)) { }
         Vector2(t_Type x, t_Type y) noexcept : X(x), Y(y) { }
+
+        Vector2 operator+(const Vector2& rhs) const
+        {
+            return Vector2(X + rhs.X, Y + rhs.Y);
+        }
+
+        Vector2& operator+=(const Vector2& rhs)
+        {
+            return *this + rhs;
+        }
     };
 
     template<Number t_Type>

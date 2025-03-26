@@ -1,6 +1,6 @@
 #include "PhEngine/GameUpdate.h"
 
-#define NUM_MOUSE_BUTTONS 3
+#define NUM_MOUSE_BUTTONS 5
 
 namespace PHENGINE_NAMESPACE
 {
