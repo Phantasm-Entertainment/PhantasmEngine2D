@@ -261,7 +261,7 @@ namespace PHENGINE_NAMESPACE
                 {
                     if (font.m_Name == name)
                     {
-                        font.m_Chars.emplace_back(code, x, y, w, h, bearingY, bearingY, advance);
+                        font.m_Chars.emplace_back(code, x, y, w, h, bearingX, bearingY, advance);
                     }
                 }
             }

@@ -40,6 +40,18 @@ namespace PHENGINE_GRAPHICS_NAMESPACE
         : m_Name(name), m_Ascender(a), m_Descender(d), m_LineSpacing(l), m_Chars(c) { }
 
         ~SpriteFont();
+
+        inline const std::string& GetName() const noexcept { return m_Name; }
+        inline std::uint16_t GetAscender() const noexcept { return m_Ascender; }
+        inline std::uint16_t GetDescender() const noexcept { return m_Descender; }
+        inline std::uint16_t GetLineSpacing() const noexcept { return m_LineSpacing; }
+
+        inline SpriteFontChar* GetChar(char c)
+        {
+            if (c > 126) { return nullptr; }
+
+            return m_Chars[c - 1];
+        }
     };
 }
 

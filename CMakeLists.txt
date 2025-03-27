@@ -30,12 +30,9 @@ set(PHENGINE_SRC_FILES
     src/Window.cpp
 
     src/Graphics/BatchRenderer.cpp
-    src/Graphics/GL.cpp
     src/Graphics/Shader.cpp
     src/Graphics/SpriteFont.cpp
 )
-
-
 
 if(PHENGINE_DEBUG)
     set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
@@ -54,7 +51,7 @@ if(WIN32)
         target_compile_definitions(PhEngine PRIVATE PHENGINE_BUILDING_DLL)
         if(PHENGINE_DEBUG)
             target_compile_definitions(PhEngine PRIVATE PHENGINE_DEBUG)
-            target_compile_options(PhEngine PRIVATE /fsanitize=address)
+            #target_compile_options(PhEngine PRIVATE /fsanitize=address)
         endif()
         target_link_libraries(PhEngine ${BROTLI_LIBRARIES} SDL3::SDL3)
     endif()
@@ -62,13 +59,12 @@ else()
     if(PHENGINE_STATIC)
 	    message(FATAL_ERROR "not done yet")
     else()
-        add_compile_options(-fsanitize=undefined -fsanitize=address)
         add_library(PhEngine SHARED ${PHENGINE_SRC_FILES} ${PHENGINE_OPT_FILES})
         target_include_directories(PhEngine PUBLIC include ${BROTLI_INCLUDE_DIRS})
         target_compile_definitions(PhEngine PRIVATE PHENGINE_BUILDING_DLL)
         if(PHENGINE_DEBUG)
             target_compile_definitions(PhEngine PRIVATE PHENGINE_DEBUG)
-            target_compile_options(PhEngine PRIVATE -fsanitize=undefined -fsanitize=address)
+            #target_compile_options(PhEngine PRIVATE -fsanitize=undefined -fsanitize=address)
         endif()
         target_link_libraries(PhEngine ${BROTLI_LIBRARIES} SDL3::SDL3)
     endif()

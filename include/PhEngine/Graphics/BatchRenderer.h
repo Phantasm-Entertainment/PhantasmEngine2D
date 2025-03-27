@@ -9,6 +9,7 @@
 #include "PhEngine/Graphics/Shader.h"
 #include "PhEngine/TextureAtlas.h"
 #include "PhEngine/Math/Rectangle.h"
+#include "PhEngine/Graphics/Colour.h"
 
 #define PHENGINE_BATCHRENDERER_MAXJOBS 102400
 
@@ -21,8 +22,11 @@ namespace PHENGINE_GRAPHICS_NAMESPACE
         Math::Rectanglef m_Rect;
         Math::Rectanglef m_Src;
         AtlasRef m_AtlasRef;
+        Colour m_Colour;
 
         inline BatchJob(const Math::Rectanglef& r, const Math::Rectanglef& s, const AtlasRef& f) : m_Rect(r), m_Src(s), m_AtlasRef(f) { }
+
+        inline BatchJob(const Math::Rectanglef& r, const Math::Rectanglef& s, const AtlasRef& f, const Colour& c) : m_Rect(r), m_Src(s), m_AtlasRef(f), m_Colour(c) { }
     };
     
     class PHENGINE_EXPORT BatchRenderer
@@ -42,7 +46,9 @@ namespace PHENGINE_GRAPHICS_NAMESPACE
 
         void Begin();
         void End();
-        void Draw(Texture2D*, Math::Vector2f);
+        void Draw(Texture2D*, const Math::Vector2f&);
+        void Draw(Texture2D*, const Math::Vector2f&, const Colour&);
+        void DrawString(SpriteFont*, const std::string&, const Math::Vector2f&);
     };
 }
 
