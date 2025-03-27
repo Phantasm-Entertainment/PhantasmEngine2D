@@ -1,7 +1,10 @@
 #ifndef PHENGINE_GRAPHICSDEVICE_H_
 #define PHENGINE_GRAPHICSDEVICE_H_
 
+#ifdef PHENGINE_DEBUG
 #include <iostream>
+#endif
+#include <string>
 
 #include "PhEngine/Internal/Setup.h"
 #include "PhEngine/Exception.h"
@@ -16,6 +19,7 @@ namespace PHENGINE_NAMESPACE
     private:
         std::vector<Monitor> m_Monitors;
         GladGLContext* m_GLCtx;
+        std::string m_RendererName;
 
         void InitGL();
     public:
@@ -26,6 +30,7 @@ namespace PHENGINE_NAMESPACE
         inline const Monitor& GetPrimaryMonitor() const noexcept { return m_Monitors[0]; }
 
         inline GladGLContext* const GetGL() const noexcept { return m_GLCtx; }
+        inline const std::string& GetRendererName() const noexcept { return m_RendererName; }
     };
 }
 

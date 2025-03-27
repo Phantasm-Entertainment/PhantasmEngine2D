@@ -87,9 +87,11 @@ namespace PHENGINE_NAMESPACE
             throw Exception("couldn't load OpenGL functions");
         }
 
+        m_RendererName = reinterpret_cast<const char*>(m_GLCtx->GetString(GL_RENDERER));
+
     #ifdef PHENGINE_DEBUG
         std::cout << "Vendor: " << m_GLCtx->GetString(GL_VENDOR) << '\n';
-        std::cout << "Renderer: " << m_GLCtx->GetString(GL_RENDERER) << '\n';
+        std::cout << "Renderer: " << m_RendererName << '\n';
         std::cout << "Version: " << m_GLCtx->GetString(GL_VERSION) << '\n';
         m_GLCtx->Enable(GL_DEBUG_OUTPUT);
         m_GLCtx->Enable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
