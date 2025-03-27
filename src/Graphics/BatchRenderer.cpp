@@ -203,8 +203,6 @@ namespace PHENGINE_GRAPHICS_NAMESPACE
                 fontChar->GetAtlasRef());
                 textPos.X += static_cast<float>(fontChar->GetAdvance());
             }
-
-            std::cout << '\n';
         }
     }
 }
