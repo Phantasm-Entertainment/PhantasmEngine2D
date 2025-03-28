@@ -158,6 +158,16 @@ namespace PHENGINE_GRAPHICS_NAMESPACE
         m_Jobs.emplace_back(Math::Rectanglef(pos.X, pos.Y, texture->GetWidth(), texture->GetHeight()), Math::Rectanglef(0, 0, texture->GetWidth(), texture->GetHeight()), texture->GetAtlasRef());
     }
 
+    void BatchRenderer::Draw(Texture2D* texture, const Math::Rectanglef& rect)
+    {
+        if (!m_Began)
+        {
+            throw Exception("haven't called begin");
+        }
+
+        m_Jobs.emplace_back(rect, Math::Rectanglef(0, 0, texture->GetWidth(), texture->GetHeight()), texture->GetAtlasRef());
+    }
+
     void BatchRenderer::Draw(Texture2D* texture, const Math::Vector2f& pos, const Colour& colour)
     {
         if (!m_Began)
@@ -166,6 +176,16 @@ namespace PHENGINE_GRAPHICS_NAMESPACE
         }
 
         m_Jobs.emplace_back(Math::Rectanglef(pos.X, pos.Y, texture->GetWidth(), texture->GetHeight()), Math::Rectanglef(0, 0, texture->GetWidth(), texture->GetHeight()), texture->GetAtlasRef(), colour);
+    }
+
+    void BatchRenderer::Draw(Texture2D* texture, const Math::Rectanglef& rect, const Math::Rectanglef& src)
+    {
+        if (!m_Began)
+        {
+            throw Exception("haven't called begin");
+        }
+
+        m_Jobs.emplace_back(rect, src, texture->GetAtlasRef());
     }
 
     void BatchRenderer::DrawString(SpriteFont* font, const std::string& text, const Math::Vector2f& pos)

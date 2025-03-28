@@ -47,7 +47,9 @@ namespace PHENGINE_GRAPHICS_NAMESPACE
         void Begin();
         void End();
         void Draw(Texture2D*, const Math::Vector2f&);
+        void Draw(Texture2D*, const Math::Rectanglef&);
         void Draw(Texture2D*, const Math::Vector2f&, const Colour&);
+        void Draw(Texture2D*, const Math::Rectanglef&, const Math::Rectanglef&);
         void DrawString(SpriteFont*, const std::string&, const Math::Vector2f&);
     };
 }
