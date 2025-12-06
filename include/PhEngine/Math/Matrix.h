@@ -76,10 +76,11 @@ template<typename t_Type, std::size_t t_Columns, std::size_t t_Rows>
 std::ostream& operator<<(std::ostream& os, const PHENGINE_MATH_NAMESPACE::Matrix<t_Type, t_Columns, t_Rows>& m)
 {
     os << "Matrix [";
+    std::size_t len = m.m_Rows * m.m_Columns;
 
-    for (int i = 0; i < m.m_Rows * m.m_Columns; ++i)
+    for (int i = 0; i < len; ++i)
     {
-        if (i == m.m_Rows * m.m_Columns - 1)
+        if (i == len - 1)
         {
             os << std::to_string(m.m_Data[i]);
         }

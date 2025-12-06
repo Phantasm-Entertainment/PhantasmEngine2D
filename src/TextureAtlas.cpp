@@ -12,7 +12,6 @@ namespace PHENGINE_NAMESPACE
         m_GL->TexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_WRAP_S, GL_REPEAT);
         m_GL->TexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_WRAP_T, GL_REPEAT);
         m_GL->TexImage3D(GL_TEXTURE_2D_ARRAY, 0, GL_RGBA8, 4096, 4096, m_Pages.size(), 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
-        //m_GL->tex
 
         for (int i = 0; i < m_Pages.size(); ++i)
         {

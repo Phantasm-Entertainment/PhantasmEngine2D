@@ -3,7 +3,6 @@
 
 #include <memory>
 #include <string>
-#include <iostream>
 
 #include "PhEngine/Internal/Setup.h"
 #include "PhEngine/GraphicsDevice.h"

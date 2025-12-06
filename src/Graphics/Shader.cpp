@@ -36,7 +36,7 @@ namespace PHENGINE_GRAPHICS_NAMESPACE
             gl->GetShaderInfoLog(vs, 1024, NULL, log);
             gl->DeleteShader(vs);
             std::string logStr = std::string("Couldn't compile vertex shader: ") + log;
-            std::cerr << logStr << '\n';
+            //std::cerr << logStr << '\n';
             throw Exception(logStr);
         }
 
@@ -52,7 +52,7 @@ namespace PHENGINE_GRAPHICS_NAMESPACE
             gl->DeleteShader(vs);
             gl->DeleteShader(fs);
             std::string logStr = std::string("Couldn't compile fragment shader: ") + log;
-            std::cerr << logStr << '\n';
+            //std::cerr << logStr << '\n';
             throw Exception(logStr);
         }
 
@@ -69,7 +69,7 @@ namespace PHENGINE_GRAPHICS_NAMESPACE
             gl->GetProgramInfoLog(program, 1024, NULL, log);
             gl->DeleteProgram(program);
             std::string logStr = std::string("Couldn't link shader program: ") + log;
-            std::cerr << logStr << '\n';
+            //std::cerr << logStr << '\n';
             throw Exception(logStr);
         }
 
